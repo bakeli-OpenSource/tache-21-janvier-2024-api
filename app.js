@@ -60,7 +60,7 @@ app.get('/api/produits', (req, res, next) => {
 
 // ________________________________________
 // Modification d'un élément dans notre collection produit
-app.put('/api/produit/:id', (req, res, next) => {
+app.put('/api/modifierproduit/:id', (req, res, next) => {
   Produit.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch((error) => res.status(400).json({ error }));
@@ -68,7 +68,7 @@ app.put('/api/produit/:id', (req, res, next) => {
 
 // ________________________________________
 // Suppression d'un élément dans notre collection produit
-app.delete('/api/produit/:id', (req, res, next) => {
+app.delete('/api/supprimerproduit/:id', (req, res, next) => {
   Produit.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
     .catch((error) => res.status(400).json({ error }));
