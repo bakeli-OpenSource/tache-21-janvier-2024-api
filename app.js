@@ -4,6 +4,20 @@ app.use(express.json());
 const mongoose = require('mongoose');
 const Produit = require('./models/produits');
 
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' });
+
+// const Storage = multer.diskStorage({
+//   destination: 'uploads',
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
+
+// const upload = multer({
+//   storage: Storage,
+// }).single('testImage');
+
 // _____________________________________________
 // Connexion à la base de données grace à mongoose
 mongoose
@@ -31,6 +45,34 @@ app.use((req, res, next) => {
 
 // ________________________________________
 // Ajout d'un élément dans notre collection Produit
+// app.post('/api/produit', (req, res, next) => {
+// upload(req, res, (err) => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     const newProduit = new Produit({
+//       nom: req.body.nom,
+//       imageUrl: {
+//         type: req.file.filename,
+//         contentType: 'image/png',
+//       },
+//       titre: req.body.titre,
+//       description: req.body.description,
+//       quantite: req.body.quantite,
+//       categorie: req.body.categorie,
+//       carracteristique: req.body.carracteristique,
+//       prix: req.body.prix,
+//       couleur: req.body.couleur,
+//       taille: req.body.taille,
+//       fournisseur: req.body.fournisseur,
+//     });
+//     newProduit
+//       .save()
+//       .then(() => res.send('Objet enregistré !'))
+//       .catch((err) => console.log(err));
+//   }
+// });
+// });
 app.post('/api/produit', (req, res, next) => {
   delete req.body._id;
   const produit = new Produit({
@@ -41,6 +83,36 @@ app.post('/api/produit', (req, res, next) => {
     .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
     .catch((error) => res.status(400).json({ error }));
 });
+
+// app.post('/api/produit', upload.single('image'), async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send("Aucun fichier n'a été téléchargé.");
+//   }
+
+//   const newProduit = new Produit({
+//     nom: req.body.nom,
+//     imageUrl: req.file.filename,
+//     titre: req.body.titre,
+//     description: req.body.description,
+//     quantite: req.body.quantite,
+//     categorie: req.body.categorie,
+//     carracteristique: req.body.carracteristique,
+//     prix: req.body.prix,
+//     couleur: req.body.couleur,
+//     taille: req.body.taille,
+//     fournisseur: req.body.fournisseur,
+//   });
+
+//   try {
+//     await newProduit.save();
+//     res.send('Produit uploaded successfully');
+//   } catch (error) {
+//     console.error("Erreur lors de l'enregistrement du produit :", error);
+//     res
+//       .status(500)
+//       .send("Une erreur est survenue lors de l'enregistrement du produit.");
+//   }
+// });
 
 // _________________________________________
 // Récupération d'un seul élément dans notre collection produit
