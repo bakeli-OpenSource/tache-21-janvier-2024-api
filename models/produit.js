@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const produitSchema = mongoose.Schema({
   nom: { type: String, required: true },
-  imageUrl: { type: Buffer, required: true },
+  imageUrl: { type: String, required: true },
   titre: { type: String, required: true },
   description: { type: String, required: true },
   quantite: { type: Number, required: true },
