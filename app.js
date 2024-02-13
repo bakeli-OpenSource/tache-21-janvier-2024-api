@@ -37,4 +37,48 @@ mongoose
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+// ______________
+// Ajout d'un élément dans notre collection Categorie
+const Categorie = require('./models/categories');
+
+app.post('/api/categorie', (req, res, next) => {
+  delete req.body._id;
+  const categorie = new Categorie({
+    ...req.body,
+  });
+  categorie
+    .save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// _______________
+// Récupération de tous les éléments dans notre collection categorie
+app.get('/api/categories', (req, res, next) => {
+  Categorie.find()
+    .then((categories) => res.status(200).json(categories))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// ______________
+// Suppression d'un élément dans notre collection categorie
+app.delete('/api/categorie/:id', (req, res, next) => {
+  Categorie.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+module.exports = app;
+
+// ______________
+// Modification d'un élément dans notre collection categorie
+app.put('/api/categorie/:id', (req, res, next) => {
+  Categorie.updateOne(
+    { _id: req.params.id },
+    { ...req.body, _id: req.params.id }
+  )
+    .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
 module.exports = app;
