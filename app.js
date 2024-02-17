@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 const mongoose = require('mongoose');
+const cors = require('cors');
+app.use(cors());
 
 // _______________________________________
 // Ajout des headers pour éviter des erreurs
@@ -74,6 +76,52 @@ module.exports = app;
 // Modification d'un élément dans notre collection categorie
 app.put('/api/categorie/:id', (req, res, next) => {
   Categorie.updateOne(
+    { _id: req.params.id },
+    { ...req.body, _id: req.params.id }
+  )
+    .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+/************************* Partie Commandes *************************/
+
+// ______________
+// Ajout d'un élément dans notre collection commande
+const Commandes = require('./models/commandes');
+
+app.post('/api/commande', (req, res, next) => {
+  delete req.body._id;
+  const commande = new Commandes({
+    ...req.body,
+  });
+  commande
+    .save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// _______________
+// Récupération de tous les éléments dans notre collection commande
+app.get('/api/commandes', (req, res, next) => {
+  Commandes.find()
+    .then((commandes) => res.status(200).json(commandes))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// ______________
+// Suppression d'un élément dans notre collection commande
+app.delete('/api/commande/:id', (req, res, next) => {
+  Commandes.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+module.exports = app;
+
+// ______________
+// Modification d'un élément dans notre collection commande
+app.put('/api/commande/:id', (req, res, next) => {
+  Commandes.updateOne(
     { _id: req.params.id },
     { ...req.body, _id: req.params.id }
   )

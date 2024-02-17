@@ -1,13 +1,20 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
+        prenom: req.body.prenom,
+        nom: req.body.nom,
+        telephone: req.body.telephone,
         email: req.body.email,
         password: hash,
+        // photo: `${req.protocol}://${req.get('host')}/images/${
+        //   req.file.filename
+        // }`,
       });
       user
         .save()
