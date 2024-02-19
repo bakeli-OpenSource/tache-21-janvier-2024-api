@@ -26,6 +26,9 @@ app.use('/api/produits', produitRoutes);
 const userRoutes = require('./routes/user');
 app.use('/api/auth', userRoutes);
 
+const clientRoutes = require('./routes/client');
+app.use('/api/authclient', clientRoutes);
+
 const path = require('path');
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
@@ -126,6 +129,13 @@ app.put('/api/commande/:id', (req, res, next) => {
     { ...req.body, _id: req.params.id }
   )
     .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+/*********************** Client *************************/
+const Clients = require('./models/client');
+app.get('/api/client', (req, res, next) => {
+  Clients.find()
+    .then((client) => res.status(200).json(client))
     .catch((error) => res.status(400).json({ error }));
 });
 
