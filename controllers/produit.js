@@ -10,6 +10,7 @@ exports.createProduit = (req, res, next) => {
     description: req.body.description,
     quantite: req.body.quantite,
     categorie: req.body.categorie,
+    categorieId: req.body.categorieId,
     carracteristique: req.body.carracteristique,
     prix: req.body.prix,
     couleur: req.body.couleur,

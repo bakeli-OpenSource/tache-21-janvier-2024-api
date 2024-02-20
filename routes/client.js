@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const userCtrl = require('../controllers/user');
+const clientCtrl = require('../controllers/client');
 const authMiddleware = require('../middleware/auth');
-const User = require('../models/user');
+const Client = require('../models/client');
 
-router.post('/signup', userCtrl.signup);
-router.post('/login', userCtrl.login);
+router.post('/signup', clientCtrl.signup);
+router.post('/login', clientCtrl.login);
 
 // route protégée nécessitant une authentification
 router.get('/profile', authMiddleware, (req, res) => {
-  User.findById(req.auth.userId) // Recherche de l'utilisateur par son ID
+  Client.findById(req.auth.userId) // Recherche de l'utilisateur par son ID
     .then((user) => {
       if (!user) {
-        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+        return res.status(404).json({ error: 'Client non trouvé' });
       }
       // Si l'utilisateur est trouvé, renvoyer toutes ses informations
       res.status(200).json(user);
@@ -21,7 +21,7 @@ router.get('/profile', authMiddleware, (req, res) => {
     .catch((err) => {
       res
         .status(500)
-        .json({ error: "Erreur lors de la récupération de l'utilisateur" });
+        .json({ error: 'Erreur lors de la récupération du client' });
     });
 });
 
