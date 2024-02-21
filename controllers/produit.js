@@ -4,16 +4,32 @@ const User = require('../models/user')
 const fs = require('fs');
 
 exports.createProduit = (req, res, next) => {
-  const objetProduit = JSON.parse(req.body.produit);
+  const objetProduit = {
+    nom: req.body.nom,
+    imageUrl: req.body.imageUrl,
+    titre: req.body.titre,
+    description: req.body.description,
+    quantite: req.body.quantite,
+    categorie: req.body.categorie,
+    categorieId: req.body.categorieId,
+    carracteristique: req.body.carracteristique,
+    prix: req.body.prix,
+    couleur: req.body.couleur,
+    taille: req.body.taille,
+    fournisseur: req.body.fournisseur,
+  };
+
   delete objetProduit._id;
   delete objetProduit._userId;
+
   const produit = new Produit({
     ...objetProduit,
-    userId: req.auth.userId,
+    // userId: req.auth.userId,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${
       req.file.filename
     }`,
   });
+
   produit
     .save()
     .then(() => {
