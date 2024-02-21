@@ -1,4 +1,4 @@
-const User = require('../models/user');
+//  const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
@@ -8,6 +8,10 @@ exports.signup = (req, res, next) => {
       const user = new User({
         email: req.body.email,
         password: hash,
+        prenom: req.body.prenom,
+        nom: req.body.nom,
+        telephone: req.body.telephne,
+       image: req.file ? req.file.path : null // Si une image est téléchargée, stockez le chemin de l'image, sinon null
       });
       user
         .save()
@@ -40,3 +44,7 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+
+
+//Creer un api pour authentification! 

@@ -1,4 +1,5 @@
 const Produit = require('../models/produit');
+const User = require('../models/user')
 
 const fs = require('fs');
 
@@ -26,6 +27,8 @@ exports.createProduit = (req, res, next) => {
       });
     });
 };
+
+
 
 exports.getOneProduit = (req, res, next) => {
   Produit.findOne({
@@ -98,3 +101,4 @@ exports.getAllProduit = (req, res, next) => {
       });
     });
 };
+
