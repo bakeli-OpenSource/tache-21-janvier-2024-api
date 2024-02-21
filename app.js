@@ -111,8 +111,10 @@ app.get('/api/commandes', (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+
 // ______________
 // Suppression d'un élément dans notre collection commande
+
 app.delete('/api/commande/:id', (req, res, next) => {
   Commandes.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
@@ -140,3 +142,4 @@ app.get('/api/client', (req, res, next) => {
 });
 
 module.exports = app;
+
