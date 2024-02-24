@@ -16,6 +16,7 @@ exports.createProduit = (req, res, next) => {
     couleur: req.body.couleur,
     taille: req.body.taille,
     fournisseur: req.body.fournisseur,
+    situation: req.body.situation,
   };
 
   delete objetProduit._id;

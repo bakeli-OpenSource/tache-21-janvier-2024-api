@@ -13,6 +13,7 @@ const produitSchema = mongoose.Schema({
   couleur: { type: String, required: true },
   taille: { type: String, required: true },
   fournisseur: { type: String, required: true },
+  situation: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Produit', produitSchema);

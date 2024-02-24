@@ -111,7 +111,6 @@ app.get('/api/commandes', (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
-
 // ______________
 // Suppression d'un élément dans notre collection commande
 
@@ -142,4 +141,3 @@ app.get('/api/client', (req, res, next) => {
 });
 
 module.exports = app;
-
