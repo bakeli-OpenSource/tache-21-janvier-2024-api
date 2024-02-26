@@ -15,6 +15,7 @@ const commandesSchema = mongoose.Schema({
   prixLivraison: { type: Number, required: true },
   prixTotal: { type: Number, required: true },
   lu: { type: Boolean, required: true },
+  date: { type: String, default: Date.now },
 });
 
 module.exports = mongoose.model('Commandes', commandesSchema);
