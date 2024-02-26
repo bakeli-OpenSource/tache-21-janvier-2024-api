@@ -12,6 +12,7 @@ const commandesSchema = mongoose.Schema({
   prixProduit: { type: Number, required: true },
   prixLivraison: { type: Number, required: true },
   prixTotal: { type: Number, required: true },
+  lu: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model('Commandes', commandesSchema);
