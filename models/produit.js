@@ -14,7 +14,6 @@ const produitSchema = mongoose.Schema({
   taille: { type: String, required: true },
   fournisseur: { type: String, required: true },
   promo: { type: Number, required: true },
-  date: { type: String, default: Date.now },
 });
 
 module.exports = mongoose.model('Produit', produitSchema);
