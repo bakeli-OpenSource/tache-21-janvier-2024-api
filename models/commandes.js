@@ -14,6 +14,7 @@ const commandesSchema = mongoose.Schema({
   prixProduit: { type: Number, required: true },
   prixLivraison: { type: Number, required: true },
   prixTotal: { type: Number, required: true },
+  imageUrl: { type: String, required: true },
   lu: { type: Boolean, required: true },
 });
 

@@ -6,6 +6,7 @@ const messageSchema = mongoose.Schema({
   email: { type: String, required: true },
   message: { type: String, required: true },
   date: { type: String, required: true },
+  lu: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model('Message', messageSchema);
