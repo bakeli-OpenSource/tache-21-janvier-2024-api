@@ -16,6 +16,10 @@ const commandesSchema = mongoose.Schema({
   prixTotal: { type: Number, required: true },
   imageUrl: { type: Array, required: true },
   lu: { type: Boolean, required: true },
+  numeroCommande: {
+    type: Number,
+    default: Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000,
+  },
 });
 
 module.exports = mongoose.model('Commandes', commandesSchema);
