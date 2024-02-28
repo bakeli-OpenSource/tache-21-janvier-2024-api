@@ -11,14 +11,14 @@ const commandesSchema = mongoose.Schema({
   quantite: { type: Array, required: true },
   date: { type: String, required: true },
   etat: { type: String, required: true },
-  prixProduit: { type: Number, required: true },
+  prixProduit: { type: Array, required: true },
   prixLivraison: { type: Number, required: true },
   prixTotal: { type: Number, required: true },
   imageUrl: { type: Array, required: true },
   lu: { type: Boolean, required: true },
   numeroCommande: {
     type: Number,
-    default: Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000,
+    default: Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 100000000,
   },
 });
 
