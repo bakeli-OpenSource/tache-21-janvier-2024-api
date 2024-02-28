@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const commandesSchema = mongoose.Schema({
   email: { type: String, required: true },
+  prenom: { type: String, required: true },
+  nom: { type: String, required: true },
   telephone: { type: Number, required: true },
   adresse: { type: String, required: true },
   produit: { type: Array, required: true },
@@ -12,7 +14,12 @@ const commandesSchema = mongoose.Schema({
   prixProduit: { type: Number, required: true },
   prixLivraison: { type: Number, required: true },
   prixTotal: { type: Number, required: true },
+  imageUrl: { type: Array, required: true },
   lu: { type: Boolean, required: true },
+  numeroCommande: {
+    type: Number,
+    default: Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000,
+  },
 });
 
 module.exports = mongoose.model('Commandes', commandesSchema);
