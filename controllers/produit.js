@@ -116,3 +116,15 @@ exports.getAllProduit = (req, res, next) => {
       });
     });
 };
+
+exports.getProduitsByCategorie = async (req, res) => {
+  const categorieId = req.params.categorieId;
+
+  try {
+    const produits = await Produit.find({ categorieId: categorieId });
+    res.json(produits);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des produits :", error);
+    res.status(500).json({ message: "Erreur lors de la récupération des produits" });
+  }
+};
