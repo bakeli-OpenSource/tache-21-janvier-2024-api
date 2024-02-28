@@ -8,7 +8,7 @@ const multer = require('../middleware/multer-config');
 const produitCtrl = require('../controllers/produit');
 
 // Récupérer tous les produits ayant le même categorieId
-router.get('/:categorieId', produitCtrl.getProduitsByCategorie);
+router.get('/categorie/:categorieId', produitCtrl.getProduitsByCategorie);
 
 router.get('/', produitCtrl.getAllProduit);
 router.post('/', multer, produitCtrl.createProduit);
