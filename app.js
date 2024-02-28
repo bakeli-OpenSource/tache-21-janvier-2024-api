@@ -163,8 +163,8 @@ app.get('/api/messages', (req, res, next) => {
 });
 
 // _______________
-// Récupération d'un' élément dans notre collection Message
-app.get('/api/messages', (req, res, next) => {
+// Récupération d'un élément dans notre collection Message
+app.get('/api/messages/:id', (req, res, next) => {
   Message.findOne({
     _id: req.params.id,
   })
