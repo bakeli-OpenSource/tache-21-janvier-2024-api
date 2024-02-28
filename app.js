@@ -162,6 +162,22 @@ app.get('/api/messages', (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+// _______________
+// Récupération d'un' élément dans notre collection Message
+app.get('/api/messages', (req, res, next) => {
+  Message.findOne({
+    _id: req.params.id,
+  })
+    .then((produit) => {
+      res.status(200).json(produit);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+});
+
 // ______________
 // Suppression d'un élément dans notre collection message
 
