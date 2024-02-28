@@ -109,6 +109,22 @@ app.get('/api/commandes', (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+// _______________
+// Récupération d'un élément dans notre collection Commande
+app.get('/api/commandes/:id', (req, res, next) => {
+  Commandes.findOne({
+    _id: req.params.id,
+  })
+    .then((commande) => {
+      res.status(200).json(commande);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+});
+
 // ______________
 // Suppression d'un élément dans notre collection commande
 
