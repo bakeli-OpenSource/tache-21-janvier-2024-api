@@ -14,6 +14,7 @@ const produitSchema = mongoose.Schema({
   taille: { type: String, required: true },
   fournisseur: { type: String, required: true },
   promo: { type: Number, required: true },
+  vente: { type: Number, required: true },
   date: { type: Date, default: Date.now },
 });
 
