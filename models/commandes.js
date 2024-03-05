@@ -18,7 +18,7 @@ const commandesSchema = mongoose.Schema({
   lu: { type: Boolean, required: true },
   numeroCommande: {
     type: Number,
-    default: Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 100000000,
+    default: Math.floor(Math.random() * 100000000),
   },
 });
 
