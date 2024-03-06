@@ -61,7 +61,11 @@ app.post('/api/categorie', (req, res, next) => {
 // Récupération de tous les éléments dans notre collection categorie
 app.get('/api/categories', (req, res, next) => {
   Categorie.find()
-    .then((categories) => res.status(200).json(categories))
+    .then((categorie) => {
+      // Inverser la liste des categories
+      const reversedCategorie = categorie.reverse();
+      res.status(200).json(reversedCategorie);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 
@@ -105,7 +109,11 @@ app.post('/api/commande', (req, res, next) => {
 // Récupération de tous les éléments dans notre collection commande
 app.get('/api/commandes', (req, res, next) => {
   Commandes.find()
-    .then((commandes) => res.status(200).json(commandes))
+    .then((commande) => {
+      // Inverser la liste des commandes
+      const reversedCommande = commande.reverse();
+      res.status(200).json(reversedCommande);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 
@@ -149,7 +157,11 @@ app.put('/api/commande/:id', (req, res, next) => {
 const Clients = require('./models/client');
 app.get('/api/client', (req, res, next) => {
   Clients.find()
-    .then((client) => res.status(200).json(client))
+    .then((client) => {
+      // Inverser la liste des client
+      const reversedClient = client.reverse();
+      res.status(200).json(reversedClient);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 
@@ -174,7 +186,11 @@ app.post('/api/messages', (req, res, next) => {
 // Récupération de tous les éléments dans notre collection Message
 app.get('/api/messages', (req, res, next) => {
   Message.find()
-    .then((messages) => res.status(200).json(messages))
+    .then((messages) => {
+      // Inverser la liste des messages
+      const reversedMessages = messages.reverse();
+      res.status(200).json(reversedMessages);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 

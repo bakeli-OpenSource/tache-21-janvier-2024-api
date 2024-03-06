@@ -107,9 +107,11 @@ exports.deleteProduit = (req, res, next) => {
 
 exports.getAllProduit = (req, res, next) => {
   Produit.find()
-    .then((produits) => {
-      res.status(200).json(produits);
-    })
+  .then((produit) => {
+    // Inverser la liste des Produit
+    const reversedProduit = produit.reverse();
+    res.status(200).json(reversedProduit);
+  })
     .catch((error) => {
       res.status(400).json({
         error: error,
