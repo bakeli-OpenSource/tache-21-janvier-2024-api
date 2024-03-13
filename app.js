@@ -61,7 +61,11 @@ app.post('/api/categorie', (req, res, next) => {
 // Récupération de tous les éléments dans notre collection categorie
 app.get('/api/categories', (req, res, next) => {
   Categorie.find()
-    .then((categories) => res.status(200).json(categories))
+    .then((categorie) => {
+      // Inverser la liste des categories
+      const reversedCategorie = categorie.reverse();
+      res.status(200).json(reversedCategorie);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 
@@ -72,8 +76,6 @@ app.delete('/api/categorie/:id', (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
     .catch((error) => res.status(400).json({ error }));
 });
-
-module.exports = app;
 
 // ______________
 // Modification d'un élément dans notre collection categorie
@@ -107,10 +109,29 @@ app.post('/api/commande', (req, res, next) => {
 // Récupération de tous les éléments dans notre collection commande
 app.get('/api/commandes', (req, res, next) => {
   Commandes.find()
-    .then((commandes) => res.status(200).json(commandes))
+    .then((commande) => {
+      // Inverser la liste des commandes
+      const reversedCommande = commande.reverse();
+      res.status(200).json(reversedCommande);
+    })
     .catch((error) => res.status(400).json({ error }));
 });
 
+// _______________
+// Récupération d'un élément dans notre collection Commande
+app.get('/api/commandes/:id', (req, res, next) => {
+  Commandes.findOne({
+    _id: req.params.id,
+  })
+    .then((commande) => {
+      res.status(200).json(commande);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+});
 
 // ______________
 // Suppression d'un élément dans notre collection commande
@@ -120,8 +141,6 @@ app.delete('/api/commande/:id', (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
     .catch((error) => res.status(400).json({ error }));
 });
-
-module.exports = app;
 
 // ______________
 // Modification d'un élément dans notre collection commande
@@ -133,13 +152,79 @@ app.put('/api/commande/:id', (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch((error) => res.status(400).json({ error }));
 });
+
 /*********************** Client *************************/
 const Clients = require('./models/client');
 app.get('/api/client', (req, res, next) => {
   Clients.find()
-    .then((client) => res.status(200).json(client))
+    .then((client) => {
+      // Inverser la liste des client
+      const reversedClient = client.reverse();
+      res.status(200).json(reversedClient);
+    })
+    .catch((error) => res.status(400).json({ error }));
+});
+
+/************************* Partie Messages *************************/
+
+// ______________
+// Ajout d'un élément dans notre collection Messages
+const Message = require('./models/message');
+
+app.post('/api/messages', (req, res, next) => {
+  delete req.body._id;
+  const message = new Message({
+    ...req.body,
+  });
+  message
+    .save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// _______________
+// Récupération de tous les éléments dans notre collection Message
+app.get('/api/messages', (req, res, next) => {
+  Message.find()
+    .then((messages) => {
+      // Inverser la liste des messages
+      const reversedMessages = messages.reverse();
+      res.status(200).json(reversedMessages);
+    })
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// _______________
+// Récupération d'un élément dans notre collection Message
+app.get('/api/messages/:id', (req, res, next) => {
+  Message.findOne({
+    _id: req.params.id,
+  })
+    .then((produit) => {
+      res.status(200).json(produit);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+});
+
+// ______________
+// Suppression d'un élément dans notre collection message
+
+app.delete('/api/messages/:id', (req, res, next) => {
+  Message.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// ______________
+// Modification d'un élément dans notre collection message
+app.put('/api/messages/:id', (req, res, next) => {
+  Message.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet modifié !' }))
     .catch((error) => res.status(400).json({ error }));
 });
 
 module.exports = app;
-

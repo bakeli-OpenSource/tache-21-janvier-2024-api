@@ -25,4 +25,25 @@ router.get('/profile', authMiddleware, (req, res) => {
     });
 });
 
+router.put('/profile', authMiddleware, (req, res) => {
+  // Récupérer les valeurs à mettre à jour à partir du corps de la requête
+  let updateValues = { ...req.body };
+
+  // Supprimer les propriétés qui ne doivent pas être mises à jour
+  delete updateValues._id;
+  delete updateValues._userId;
+
+  // Mettre à jour l'utilisateur
+  User.findOneAndUpdate({ _id: req.auth.userId }, updateValues, { new: true })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+      res.status(200).json({ message: 'Utilisateur modifié!', user });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+});
+
 module.exports = router;

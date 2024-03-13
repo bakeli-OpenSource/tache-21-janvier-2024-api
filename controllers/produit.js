@@ -17,6 +17,7 @@ exports.createProduit = (req, res, next) => {
     couleur: req.body.couleur,
     taille: req.body.taille,
     fournisseur: req.body.fournisseur,
+    promo: req.body.promo,
   };
 
   delete objetProduit._id;
@@ -61,28 +62,29 @@ exports.getOneProduit = (req, res, next) => {
 };
 
 exports.modifyProduit = (req, res, next) => {
-  const objetProduit = req.file
-    ? {
-        ...JSON.parse(req.body.produit),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${
-          req.file.filename
-        }`,
-      }
-    : { ...req.body };
+  // Récupérer les valeurs à mettre à jour à partir du corps de la requête
+  let updateValues = { ...req.body };
 
-  delete objetProduit._userId;
-  Produit.findOne({ _id: req.params.id })
+  // Supprimer les propriétés qui ne doivent pas être mises à jour
+  delete updateValues._id;
+  delete updateValues._userId;
+
+  // Si une nouvelle image est fournie, mettre à jour l'URL de l'image
+  if (req.file) {
+    updateValues.imageUrl = `${req.protocol}://${req.get('host')}/images/${
+      req.file.filename
+    }`;
+  } else {
+    // Si aucune nouvelle image n'est fournie, ne pas modifier l'URL de l'image
+    delete updateValues.imageUrl;
+  }
+
+  Produit.findOneAndUpdate({ _id: req.params.id }, updateValues, { new: true })
     .then((produit) => {
-      if (produit.userId != req.auth.userId) {
-        res.status(401).json({ message: 'Not authorized' });
-      } else {
-        Produit.updateOne(
-          { _id: req.params.id },
-          { ...objetProduit, _id: req.params.id }
-        )
-          .then(() => res.status(200).json({ message: 'Objet modifié!' }))
-          .catch((error) => res.status(401).json({ error }));
+      if (!produit) {
+        return res.status(404).json({ message: 'Produit non trouvé' });
       }
+      res.status(200).json({ message: 'Produit modifié!', produit });
     })
     .catch((error) => {
       res.status(400).json({ error });
@@ -108,9 +110,11 @@ exports.deleteProduit = (req, res, next) => {
 
 exports.getAllProduit = (req, res, next) => {
   Produit.find()
-    .then((produits) => {
-      res.status(200).json(produits);
-    })
+  .then((produit) => {
+    // Inverser la liste des Produit
+    const reversedProduit = produit.reverse();
+    res.status(200).json(reversedProduit);
+  })
     .catch((error) => {
       res.status(400).json({
         error: error,
@@ -118,3 +122,16 @@ exports.getAllProduit = (req, res, next) => {
     });
 };
 
+
+exports.getProduitsByCategorie = async (req, res) => {
+  const categorieId = req.params.categorieId;
+
+  try {
+    const produits = await Produit.find({ categorieId: categorieId });
+    res.json(produits);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des produits :", error);
+    res.status(500).json({ message: "Erreur lors de la récupération des produits" });
+  }
+};
+ 
